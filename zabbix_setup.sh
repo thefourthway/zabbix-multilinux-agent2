@@ -11,13 +11,14 @@ fi
 
 function install_on_ubuntu() {
     command -v wget >/dev/null 2>&1 || { apt-get update -y && apt-get install -y wget; }
-    local version_id=$(cat /etc/os-release | grep '^VERSION_ID=' | awk -F '=' '{print $2}')
+    local version_id=$(cat /etc/os-release | grep '^VERSION_ID=' | awk -F '=' '{print $2}' | sed 's#"##g')
 
     PKG_FILE="https://repo.zabbix.com/zabbix/${ZABBIX_VERSION}/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_${ZABBIX_VERSION}+ubuntu${version_id}_all.deb"
     PKG_TMP="$(mktemp --suffix=.deb)"
     
-    wget -q0 "$PKG_TMP" "$PKG_FILE"
-    dpkg -i "$PKG_TMP"
+    wget -qO "$PKG_TMP" "$PKG_FILE"
+    yes | dpkg -i "$PKG_TMP"
+    
     rm -rf "$PKG_TMP"
     
     apt-get update -y
@@ -29,13 +30,13 @@ function install_on_ubuntu() {
 function install_on_debian() {
     command -v wget >/dev/null 2>&1 || { apt-get update -y && apt-get install -y wget; }
 
-    local version_id=$(cat /etc/os-release | grep '^VERSION_ID=' | awk -F '=' '{print $2}')
+    local version_id=$(cat /etc/os-release | grep '^VERSION_ID=' | awk -F '=' '{print $2}' | sed 's#"##g')
 
     PKG_FILE="https://repo.zabbix.com/zabbix/${ZABBIX_VERSION}/release/debian/pool/main/z/zabbix-release/zabbix-release_latest_${ZABBIX_VERSION}+debian${version_id}_all.deb"
     PKG_TMP="$(mktemp --suffix=.deb)"
 
-    wget -q0 "$PKG_TMP" "$PKG_FILE"
-    dpkg -i "$PKG_TMP"
+    wget -qO "$PKG_TMP" "$PKG_FILE"
+    yes | dpkg -i "$PKG_TMP"
     rm -rf "$PKG_TMP"
 
     apt-get update -y
