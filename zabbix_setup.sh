@@ -50,7 +50,7 @@ function install_on_fedora() {
 
     PKG_FILE="https://repo.zabbix.com/zabbix/${ZABBIX_VERSION}/release/rhel/10/noarch/zabbix-release-latest-${ZABBIX_VERSION}.el${EL}.noarch.rpm"
 
-    rpm -Uvh --quiet "$RPM_URL"
+    rpm -Uvh --quiet "$PKG_FILE"
 
     dnf clean all -y
     dnf install -y zabbix-agent2
