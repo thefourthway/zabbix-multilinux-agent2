@@ -23,8 +23,6 @@ function install_on_ubuntu() {
     
     apt-get update -y
     apt-get install -y zabbix-agent2
-
-    true;
 }
 
 function install_on_debian() {
@@ -40,8 +38,7 @@ function install_on_debian() {
     rm -rf "$PKG_TMP"
 
     apt-get update -y
-    apt-get install -y zabbix-agent2 
-    true;
+    apt-get install -y zabbix-agent2
 }
 
 function install_on_fedora() {
@@ -55,7 +52,6 @@ function install_on_fedora() {
 
     dnf clean all -y
     dnf install -y zabbix-agent2
-    true;
 }
 
 
