@@ -18,11 +18,13 @@ function install_on_ubuntu() {
     
     wget -qO "$PKG_TMP" "$PKG_FILE"
     yes | dpkg -i "$PKG_TMP"
-    
+
     rm -rf "$PKG_TMP"
     
     apt-get update -y
     apt-get install -y zabbix-agent2
+
+    true;
 }
 
 function install_on_debian() {
@@ -38,7 +40,8 @@ function install_on_debian() {
     rm -rf "$PKG_TMP"
 
     apt-get update -y
-    apt-get install -y zabbix-agent2
+    apt-get install -y zabbix-agent2 
+    true;
 }
 
 function install_on_fedora() {
@@ -52,6 +55,7 @@ function install_on_fedora() {
 
     dnf clean all -y
     dnf install -y zabbix-agent2
+    true;
 }
 
 
@@ -70,6 +74,7 @@ case "${LINUX_FLAVOR,,}" in
       install_on_ubuntu
       ;;
     *)
-      echo "Unknown distro '{$LINUX_FLAVOR}' - fedora/debian/ubuntu only"
+      echo "Unknown distro '{$LINUX_FLAVOR}' - fedora/debian/ubuntu only" >&2
+      exit 1
       ;;
 esac
