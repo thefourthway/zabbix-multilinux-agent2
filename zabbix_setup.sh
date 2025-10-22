@@ -8,6 +8,10 @@ if [ "${EUID:-$(id -u)}" -ne 0 ]; then
     exit 1
 fi
 
+if command -v zabbix_agent2 >/dev/null 2>&1; then
+    echo "zabbix_agent2 already installed, skipping setup."
+    exit 0
+fi
 
 function install_on_ubuntu() {
     command -v wget >/dev/null 2>&1 || { apt-get update -y && apt-get install -y wget; }
